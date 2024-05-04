@@ -4,10 +4,12 @@ require "option_parser"
 module CrystalBrain
   VERSION = "0.1.0"
 
+  #states
   DEAD  = 0
   DYING = 1
   ALIVE = 2
 
+  #clear screen command
   CLS = "\33c\e[3J"
 
   class Brain
@@ -23,26 +25,21 @@ module CrystalBrain
       random_population
     end
 
+    #for printing to console - don't call as API unless you want to clear the screen and print the board.
     def simple_print()
-      x = 0
-
-      while x < @x_size
+      (0...@x_size).each do |x|
         line_buffer = ""
-        y = 0
-        while y < @y_size
-          this_char = ""
-          if @board[x][y] == ALIVE
-            this_char = " #{"X".colorize(:red)}"
-          elsif @board[x][y] == DYING
-            this_char = " #{"*".to_s.colorize(:yellow)}"
-          else
-            this_char = " #{" ".to_s.colorize(:white)}"
+        (0...@y_size).each do |y|
+          case @board[x][y]
+            when ALIVE
+              line_buffer += " #{"X".colorize(:red)}"
+            when DYING
+              line_buffer += " #{"*".to_s.colorize(:yellow)}"
+            else
+              line_buffer += " #{" ".to_s.colorize(:white)}"
           end
-          line_buffer += this_char
-          y += 1
         end
         puts line_buffer
-        x+=1
       end
     end
 
@@ -94,11 +91,8 @@ module CrystalBrain
           end
         end
       end
-
       @board = board_buffer
-
     end
-
   end
 
 
@@ -141,7 +135,6 @@ module CrystalBrain
     iterations -= 1
     count += 1
     sleep sleep_time
-    #brain.time_step
     brain.tick
   end
 
