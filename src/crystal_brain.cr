@@ -48,7 +48,6 @@ module CrystalBrain
           (0...@y_size).each do |y|
             @board[x][y] =  Random.rand(3)
           end
-
         end
     end
 
@@ -79,14 +78,15 @@ module CrystalBrain
           case @board[x][y]
             when DEAD
               # then transition to life if it has exactly 2 neighbors
-
               neighbors = count_live_neighbors x, y
               if neighbors == 2
                 board_buffer[x][y] = ALIVE
               end
             when ALIVE
+              # then transition to dying
               board_buffer[x][y] = DYING
             else
+              #then it was dying, transition to dead
               board_buffer[x][y] = DEAD
           end
         end
