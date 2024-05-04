@@ -27,6 +27,7 @@ module CrystalBrain
 
     #for printing to console - don't call as API unless you want to clear the screen and print the board.
     def simple_print()
+      buffer = ""
       (0...@x_size).each do |x|
         line_buffer = ""
         (0...@y_size).each do |y|
@@ -39,8 +40,10 @@ module CrystalBrain
               line_buffer += " #{" ".to_s.colorize(:white)}"
           end
         end
-        puts line_buffer
+        buffer += line_buffer + "\n"
       end
+      puts CLS
+      puts buffer
     end
 
     def random_population()
@@ -114,11 +117,11 @@ module CrystalBrain
     parser.on "-i ITERS", "--iterations ITERS", "Iteration count" do |iters|
       iterations = iters.to_i
     end
-    parser.on "-r SIZE", "--rowsize SIZE", "Board size on the x axis" do |ysz|
-      y_size = ysz.to_i
-    end
-    parser.on "-c SIZE", "--colsize SIZE", "Board size on the y axis" do |xsz|
+    parser.on "-r SIZE", "--rowsize SIZE", "Board size in rows" do |xsz|
       x_size = xsz.to_i
+    end
+    parser.on "-c SIZE", "--colsize SIZE", "Board size in columns" do |ysz|
+      y_size = ysz.to_i
     end
     parser.on "-t TIME", "--time TIME", "Animation sleep time" do |tme|
       sleep_time = tme.to_f
@@ -129,9 +132,8 @@ module CrystalBrain
   brain = Brain.new "MyTest", x_size.to_i, y_size.to_i
   count = 0
   while iterations > 0
-    puts CLS
-    puts "Iterating: " + count.to_s
     brain.simple_print
+    puts "Iterating: " + count.to_s
     iterations -= 1
     count += 1
     sleep sleep_time
