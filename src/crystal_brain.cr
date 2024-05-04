@@ -25,27 +25,6 @@ module CrystalBrain
       random_population
     end
 
-    #for printing to console - don't call as API unless you want to clear the screen and print the board.
-    def simple_print()
-      buffer = ""
-      (0...@x_size).each do |x|
-        line_buffer = ""
-        (0...@y_size).each do |y|
-          case @board[x][y]
-            when ALIVE
-              line_buffer += " #{"X".colorize(:red)}"
-            when DYING
-              line_buffer += " #{"*".to_s.colorize(:yellow)}"
-            else
-              line_buffer += " #{" ".to_s.colorize(:white)}"
-          end
-        end
-        buffer += line_buffer + "\n"
-      end
-      puts CLS
-      puts buffer
-    end
-
     def random_population()
         (0...@x_size).each do |x|
           (0...@y_size).each do |y|
@@ -96,8 +75,30 @@ module CrystalBrain
       end
       @board = board_buffer
     end
-  end
 
+    #for printing to console - don't call as API unless you want to clear the screen and print the board.
+    def simple_print()
+      buffer = ""
+      (0...@x_size).each do |x|
+        line_buffer = ""
+        (0...@y_size).each do |y|
+          case @board[x][y]
+            when ALIVE
+              line_buffer += " #{"X".colorize(:red)}"
+            when DYING
+              line_buffer += " #{"*".to_s.colorize(:yellow)}"
+            else
+              line_buffer += " #{" ".to_s.colorize(:white)}"
+          end
+        end
+        buffer += line_buffer + "\n"
+      end
+      puts CLS
+      puts buffer
+    end
+
+
+  end # class brain
 
   iterations = 200
   sleep_time = 0.25
