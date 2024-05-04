@@ -1,0 +1,14 @@
+name: crystal_brain
+version: 0.1.0
+
+authors:
+  - your-name-here <your-email-here>
+
+
+targets:
+  crystal_brain:
+    main: src/crystal_brain.cr
+
+crystal: '>= 1.11.2'
+
+license: MIT
