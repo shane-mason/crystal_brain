@@ -18,10 +18,7 @@ module CrystalBrain
     property x_size : Int32
     property y_size : Int32
 
-    def initialize(name : String, x_size : Int32, y_size : Int32)
-      @name = name
-      @x_size = x_size
-      @y_size = y_size
+    def initialize(@name : String, @x_size : Int32, @y_size : Int32)
       @board = Array(Array(States)).new(@x_size) { Array(States).new(@y_size, States::DEAD) }
       random_population
     end
@@ -29,24 +26,19 @@ module CrystalBrain
     def random_population()
         (0...@x_size).each do |x|
           (0...@y_size).each do |y|
-            choice = Random.rand(3)
-            case choice
-              when States::DEAD.value
-                @board[x][y] = States::DEAD
-              when States::DYING.value
-                @board[x][y] = States::DYING
-              else
-                @board[x][y] = States::ALIVE
-            end
+            random_state = Random.rand(3)
+            @board[x][y] = States.new(random_state)
           end
         end
     end
+
 
     def count_live_neighbors(x_in, y_in)
       count = 0
       (-1..1).each do |x|
         (-1..1).each do |y|
           unless x==0 && y==0
+            #only if neighbor is inside the grid
             if x_in+x>=0 && x_in+x < @x_size && y_in+y>=0 && y_in+y < @y_size
               if @board[x_in+x][y_in+y] == States::ALIVE
                 count += 1
