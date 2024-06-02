@@ -83,9 +83,9 @@ module CrystalBrain
             when States::ALIVE
               line_buffer += " #{"X".colorize(:red)}"
             when States::DYING
-              line_buffer += " #{"*".to_s.colorize(:blue)}"
+              line_buffer += " #{"*".colorize(:blue)}"
             else
-              line_buffer += " #{" ".to_s.colorize(:white)}"
+              line_buffer += " #{" ".colorize(:white)}"
           end
         end
         buffer += line_buffer + "\n"
